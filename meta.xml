@@ -1,0 +1,55 @@
+<meta> 
+	<info author="TrezeLurese" name="RRP" version="0" type="script"/>
+    
+    <script src="Panel/client.lua" type="client"/>
+    <script src="Panel/server.lua" type="server"/>
+
+
+    <file src="images/pane.png"/>
+    <file src="images/arrow.png"/>
+    <file src="images/left.png"/>
+    <file src="images/title.png"/>
+    <file src="images/aleft.png"/>
+    <file src="images/aright.png"/>
+    <file src="images/round.png"/>
+    <file src="images/cross.png"/>
+
+    <file src="images/menu/account.png"/>
+    <file src="images/menu/info.png"/>
+    <file src="images/menu/inventory.png"/>
+    <file src="images/menu/settings.png"/>
+    <file src="images/menu/shop.png"/>
+
+    <file src="images/weather/fog.png"/>
+    <file src="images/weather/shower.png"/>
+    <file src="images/weather/storm.png"/>
+    <file src="images/weather/sunny.png"/>
+    <file src="images/weather/wind.png"/>
+
+    <file src="fonts/thin.ttf"/>
+    <file src="fonts/OSB.ttf"/>
+    <file src="fonts/OSBI.ttf"/>
+    <file src="fonts/OSEB.ttf"/>
+    <file src="fonts/OSEBI.ttf"/>
+    <file src="fonts/OSI.ttf"/>
+    <file src="fonts/OSL.ttf"/>
+    <file src="fonts/OSLI.ttf"/>
+    <file src="fonts/OSR.ttf"/>
+    <file src="fonts/OSSB.ttf"/>
+    <file src="fonts/OSSBI.ttf"/>
+
+    <file src="motion.fx"/>
+
+
+
+
+
+    <export function="addNotification" type="client"/>
+    <export function="addNotification" type="server"/>
+    <export function="openMainMenu" type="client"/>
+    <export function="closeMainMenu" type="client"/>
+    <export function="openTimeOrWeather" type="client"/>
+    <export function="closeTimeOrWeather" type="client"/>
+    <export function="openNotifications" type="client"/>
+    <export function="closeNotifications" type="client"/>
+</meta>
