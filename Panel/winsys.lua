@@ -338,4 +338,7 @@ function fullscreenStaticWindow(win)
 	AnimatedFullscreen[ident] = true
 end
 
-createWindow(108, 100, 450, 200, "Test")
+local window = createWindow(108, 100, 450, 200, "Test")
+addCommandHandler("show", function()
+	openStaticWindow(window)
+end)

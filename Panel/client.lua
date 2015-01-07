@@ -142,14 +142,14 @@ addEventHandler("onClientResourceStart", root, function(res)
 	local WeatherRound = guiCreateStaticImage(5, 5, 101, 101, "images/round.png", false, WeatherScroller) --Круг в панели
 	guiSetProperty(WeatherRound, "ImageColours", "tl:FF1BC5E8 tr:FF1BC5E8 bl:FF2962D8 br:FF2962D8")
 
-	RealTine[4] = guiCreateLabel(0, 0, 101, 101, "Солнечно", false, WeatherRound) --Погода во вкладке
+	RealTine[4] = guiCreateLabel(0, 0, 101, 101, "солнечно", false, WeatherRound) --Погода во вкладке
 	guiLabelSetVerticalAlign(RealTine[4], "center")
 	guiLabelSetHorizontalAlign(RealTine[4], "center")
 	guiSetFont(RealTine[4], guiCreateFont("fonts/OSL.ttf", 14) )
 	--guiLabelSetColor(RealTine[4], 41, 98, 216)
 
 	--RealTine[5] = guiCreateStaticImage(21, 21, 28, 28, "images/weather/sunny.png", false, WeatherRound) --Погода в круге
-	--[[RealTine[5] = guiCreateLabel(0, 120, 150, 20, "Солнечно", false, WeatherScroller) --Погода в круге
+	--[[RealTine[5] = guiCreateLabel(0, 120, 150, 20, "солнечно", false, WeatherScroller) --Погода в круге
 	--guiLabelSetVerticalAlign(RealTine[6], "center")
 	guiLabelSetHorizontalAlign(RealTine[6], "center")
 	guiSetFont(RealTine[6], guiCreateFont("fonts/OSL.ttf", 10) )
