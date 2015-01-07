@@ -52,116 +52,35 @@ function createWindow(x, y, w, h, title)
 	WindowSystem[id]["Title"]:setHorizontalAlign("center")
 	WindowSystem[id]["Title"]:setFont(GuiFont.create("fonts/OSR.ttf", 10))
 
-	WindowSystem[id]["FullScreen"] = GuiStaticImage.create(w-42, 0, 21, 21, "images/left.png", false, WindowSystem[id]["Title"])
-	WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 	
-	WindowSystem[id]["Close"] = GuiStaticImage.create(w-21, 0, 21, 21, "images/right.png", false, WindowSystem[id]["Title"])
-	WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 
+	WindowSystem[id]["FullScreen"] = GuiStaticImage.create(w-42, 0, 21, 21, "images/aleft.png", false, WindowSystem[id]["Title"])
+	WindowSystem[id]["FullScreenRound"] = GuiStaticImage.create(0, 0, 21, 21, "images/left.png", false, WindowSystem[id]["FullScreen"])
+	WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 
+	WindowSystem[id]["FullScreenRound"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 
+
+	WindowSystem[id]["Close"] = GuiStaticImage.create(w-21, 0, 21, 21, "images/aright.png", false, WindowSystem[id]["Title"])
+	WindowSystem[id]["CloseRound"] = GuiStaticImage.create(0, 0, 21, 21, "images/right.png", false, WindowSystem[id]["Close"])
+	WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 
+	WindowSystem[id]["CloseRound"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 
 
 	WindowSystem[id]["Resize"] = GuiStaticImage.create(w-7, h-7, 7, 7, "images/resizer.png", false, WindowSystem[id]["Frame"])
 	WindowSystem[id]["Resize"]:setProperty("ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
 
 
 	addEventHandler("onClientMouseEnter", root, function()
-		if source == WindowSystem[id]["FullScreen"] then
+		if source == WindowSystem[id]["FullScreenRound"] then
 			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:FFEB974E tr:FFEB974E bl:FFEB974E br:FFEB974E") 	
 		end
-		if source == WindowSystem[id]["Close"] then
+		if source == WindowSystem[id]["CloseRound"] then
 			WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:FFD64541 tr:FFD64541 bl:FFD64541 br:FFD64541") 	
 		end
 	end)
 
 	addEventHandler("onClientMouseLeave", root, function()
-		if source == WindowSystem[id]["FullScreen"] then
-			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 	
+		if source == WindowSystem[id]["FullScreenRound"] then
+			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 	
 		end
-		if source == WindowSystem[id]["Close"] then
-			WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF") 	
-		end
-	end)
-
-	AnimatedClose[id] = false
-	AnimatedOpen[id] = false
-	AnimatedFullscreen[id] = false
-	addEventHandler("onClientGUIClick", root, function()
-		if source == WindowSystem[id]["FullScreen"] then
-			AnimatedFullscreen[id] = true
-		end
-		if source == WindowSystem[id]["Close"] then
-			AnimatedClose[id] = true
-		end
-	end)
-
-	local boned = 0
-	local Vars={}
-	addEventHandler("onClientRender", root, function()
-		if AnimatedFullscreen[id] then
-			AnimatedClose[id] = false
-			AnimatedOpen[id] = false
-
-			if boned == 0 then
-
-				local w, h = getStaticWindowSize(id)
-				Vars = {w, h}
-				boned = 1
-
-			elseif boned == 1 then
-
-				local w, h = WindowSystem[id]["Back"]:getSize(false)
-				h = h-30
-				if h < 30 then h = 0 end
-				WindowSystem[id]["Back"]:setSize(w, h, false)
-				if h == 0 then boned = 2 end
-
-			elseif boned == 2 then
-
-				setStaticWindowPosition(id, 0, 40, false)
-				setStaticWindowSize(id, Width-8, Height-68)
-				WindowSystem[id]["Back"]:setSize(Width, 0, false)				
-				boned = 3
-
-			elseif boned == 3 then
-
-				local w, h = WindowSystem[id]["Back"]:getSize(false)
-				h = h+30
-				if h > Height-60 then h = Height-40 end
-				WindowSystem[id]["Back"]:setSize(w, h, false)	
-				if h == Height-40 then
-					boned = 0
-					AnimatedFullscreen[id] = false
-				end		
-
-			end
-		end
-
-		if AnimatedClose[id] == true then
-			AnimatedOpen[id] = false
-			AnimatedFullscreen[id] = false
-
-			local w, h = WindowSystem[id]["Back"]:getSize(false)
-			h = h-30
-			if h < 30 then h = 0 end
-			WindowSystem[id]["Back"]:setSize(w, h, false)
-			if h == 0 then AnimatedClose[id] = false end
-
-		end
-
-		if AnimatedOpen[id] == true then
-			AnimatedClose[id] = false
-			AnimatedFullscreen[id] = false
-
-			if boned == 0 then
-				local w, h = getStaticWindowSize(id)
-				Vars = {w, h}
-				boned = 1
-			elseif boned == 1 then
-
-				local w, h = WindowSystem[id]["Back"]:getSize(false)
-				h = h+30
-				if h >= Vars[2] then h = Vars[2]+28 end
-				WindowSystem[id]["Back"]:setSize(w, h, false)
-				if h == Vars[2]+28 then AnimatedOpen[id] = false end
-
-			end
+		if source == WindowSystem[id]["CloseRound"] then
+			WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 	
 		end
 	end)
 
@@ -170,6 +89,166 @@ function createWindow(x, y, w, h, title)
 
 	WindowSystem[id]["Moving"] = true
 	WindowSystem[id]["Resizing"] = true
+
+
+
+
+
+
+	AnimatedClose[id] = false
+	AnimatedOpen[id] = false
+	AnimatedFullscreen[id] = false
+	addEventHandler("onClientGUIClick", root, function()
+		if source == WindowSystem[id]["FullScreenRound"] then
+			AnimatedFullscreen[id] = true
+		end
+		if source == WindowSystem[id]["CloseRound"] then
+			AnimatedClose[id] = true
+		end
+	end)
+
+	local boned = 0
+	local Vars={}
+	local Fullscreened = false
+	addEventHandler("onClientRender", root, function()
+		if AnimatedFullscreen[id] then
+			AnimatedClose[id] = false
+			AnimatedOpen[id] = false
+
+			if Fullscreened == false then
+
+				if boned == 0 then
+
+					local w, h = WindowSystem[id]["Back"]:getSize(false) 
+					local ax, y = WindowSystem[id]["Back"]:getPosition(false)
+					Vars = {w, h, ax, y, WindowSystem[id]["Moving"], WindowSystem[id]["Resizing"]}
+					boned = 1
+
+				elseif boned == 1 then
+
+					local w, h = WindowSystem[id]["Back"]:getSize(false)
+					h = h-30
+					if h < 30 then h = 0 end
+					WindowSystem[id]["Back"]:setSize(w, h, false)
+					if h == 0 then boned = 2 end
+
+				elseif boned == 2 then
+
+					setStaticWindowPosition(id, 0, 40, false)
+					setStaticWindowSize(id, Width-8, Height-68)
+					WindowSystem[id]["Back"]:setSize(Width, 0, false)	
+					setStaticWindowMovable(id, false)
+					setStaticWindowSizable(id, false)		
+					boned = 3
+
+				elseif boned == 3 then
+
+					local w, h = WindowSystem[id]["Back"]:getSize(false)
+					h = h+30
+					if h > Height-60 then h = Height-40 end
+					WindowSystem[id]["Back"]:setSize(w, h, false)	
+					if h == Height-40 then
+						boned = 0
+						AnimatedFullscreen[id] = false
+						Fullscreened = true
+					end		
+				end
+				
+
+			elseif Fullscreened == true then
+
+				if boned == 0 then
+
+					local w, h = WindowSystem[id]["Back"]:getSize(false)
+					h = h-30
+					if h < 30 then h = 0 end
+					WindowSystem[id]["Back"]:setSize(w, h, false)
+					if h == 0 then boned = 1 end
+
+				elseif boned == 1 then
+
+					--setStaticWindowPosition(id, Vars[3], Vars[4], false)
+					WindowSystem[id]["Back"]:setPosition(Vars[3], Vars[4], false)
+					setStaticWindowSize(id, Vars[1]-8, Vars[2]-28)
+					WindowSystem[id]["Back"]:setSize(Vars[1], 0, false)					
+					setStaticWindowMovable(id, Vars[5])
+					setStaticWindowSizable(id, Vars[6])
+					boned = 2
+
+				elseif boned == 2 then					
+
+					local w, h = WindowSystem[id]["Back"]:getSize(false)
+					h = h+30
+					if h > Vars[2]-30 then h = Vars[2] end
+					WindowSystem[id]["Back"]:setSize(w, h, false)	
+					if h == Vars[2] then
+						boned = 0
+						AnimatedFullscreen[id] = false
+						Fullscreened = false
+					end	
+
+				end
+
+			end
+		end
+
+
+
+
+
+		if AnimatedClose[id] == true then
+			AnimatedOpen[id] = false
+			AnimatedFullscreen[id] = false
+
+			if boned == 0 then
+				local w, h = WindowSystem[id]["Back"]:getSize(false) 
+				local x, y = WindowSystem[id]["Back"]:getPosition(false)
+				if not Fullscreened then Vars = {w, h, x, y, WindowSystem[id]["Moving"], WindowSystem[id]["Resizing"]} end
+				boned = 1
+			elseif boned == 1 then
+				local w, h = WindowSystem[id]["Back"]:getSize(false)
+				h = h-30
+				if h < 30 then h = 0 end
+				WindowSystem[id]["Back"]:setSize(w, h, false)
+				if h == 0 then AnimatedClose[id] = false boned = 0 end
+			end
+
+		end
+
+		if AnimatedOpen[id] == true then
+			AnimatedClose[id] = false
+			AnimatedFullscreen[id] = false
+
+			if boned == 0 then
+				
+				local w, h = WindowSystem[id]["Back"]:getSize(false) 
+				if h <= 10 then 
+					boned = 1 
+				else 
+					AnimatedOpen[id] = false 
+				end
+			
+			elseif boned == 1 then				
+
+				local w, h = WindowSystem[id]["Back"]:getSize(false)
+				h = h+30
+				local f
+				if not Fullscreened then f = Vars[2]
+				else f = Height-40 end
+
+				if h > f-30 then 
+					h = f
+				end
+
+				WindowSystem[id]["Back"]:setSize(w, h, false)	
+				if h == f then
+					boned = 0
+					AnimatedOpen[id] = false
+				end
+
+			end
+		end
+	end)
 
 	EnableMoving[id] = false
 	EnableResizing[id] = false
@@ -205,6 +284,7 @@ function createWindow(x, y, w, h, title)
 		end
 	end)
 
+	return WindowSystem[id]["Frame"]
 end
 
 function setStaticWindowPosition(win, x, y, rel)
@@ -213,6 +293,7 @@ function setStaticWindowPosition(win, x, y, rel)
 	else ident = tonumber(win) end
 	if not WindowSystem[ident]["Back"] then return false end
 	local w, h = WindowSystem[ident]["Back"]:getSize(false)
+	if rel ~= true and rel ~= false then rel = false end
 	if x < -5 then x = -5 end
 	if y < -5 then y = -5 end
 	if x > Width-w+5 then x = Width-w+5 end
@@ -262,7 +343,7 @@ end
 function getStaticWindowID(win)
 	local ID = nil
 	for i in pairs(WindowSystem) do
-		if WindowSystem[i]["Back"] == win then 
+		if WindowSystem[i]["Frame"] == win then 
 			ID = i
 		end
 	end
@@ -305,7 +386,9 @@ function getStaticWindowPosition(win, bool)
 	if not tonumber(win) then ident = getStaticWindowID(win)
 	else ident = tonumber(win) end
 	if not WindowSystem[ident]["Back"] then return false end
-	return WindowSystem[ident]["Back"]:getPosition(bool)
+	if bool ~= true and bool ~= false then bool = false end
+	local x, y = WindowSystem[ident]["Back"]:getPosition(bool)
+	return x, y
 end
 
 function getStaticWindowSize(win, bool)
@@ -314,7 +397,8 @@ function getStaticWindowSize(win, bool)
 	else ident = tonumber(win) end
 	if not WindowSystem[ident]["Back"] then return false end
 	if bool ~= true and bool ~= false then bool = false end
-	return WindowSystem[ident]["Frame"]:getSize(bool)
+	local w, h = WindowSystem[ident]["Frame"]:getSize(bool)
+	return w, h
 end
 
 function openStaticWindow(win)
@@ -329,13 +413,6 @@ function closeStaticWindow(win)
 	if not tonumber(win) then ident = getStaticWindowID(win)
 	else ident = tonumber(win) end
 	AnimatedClose[ident] = true
-end
-
-function fullscreenStaticWindow(win)
-	local ident
-	if not tonumber(win) then ident = getStaticWindowID(win)
-	else ident = tonumber(win) end
-	AnimatedFullscreen[ident] = true
 end
 
 local window = createWindow(108, 100, 450, 200, "Test")

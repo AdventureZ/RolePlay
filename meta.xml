@@ -9,8 +9,8 @@
     <file src="images/pane.png"/>
     <file src="images/arrow.png"/>
     <file src="images/title.png"/>
-    <!--file src="images/aleft.png"/-->
-    <!--file src="images/aright.png"/-->
+    <file src="images/aleft.png"/>
+    <file src="images/aright.png"/>
     <file src="images/round.png"/>
     <file src="images/cross.png"/>
     <file src="images/left.png"/>
