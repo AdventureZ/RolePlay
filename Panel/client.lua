@@ -1437,6 +1437,7 @@ function addNotification(title, text, func)
 
 	addEventHandler("onClientRender", root, function()
 		if AllNotifications[id]["OpenClose"] == 1 then
+			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
 			zx = zx-2
 			if zx <= 170 then zx = 170 end
@@ -1444,6 +1445,7 @@ function addNotification(title, text, func)
 			guiBringToFront(AllNotifications[id]["Moving"])
 			if zx == 170 then AllNotifications[id]["OpenClose"] = 0 end 
 		elseif AllNotifications[id]["OpenClose"] == 2 then
+			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
 			zx = zx+2
 			if zx >= 210 then zx = 210 end

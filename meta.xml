@@ -1,18 +1,31 @@
 <meta> 
-	<info author="TrezeLurese" name="RRP" version="0" type="script"/>
+	<info author="TrezeLurese" name="MainPanel" version="0" type="script"/>
     
     <script src="Panel/client.lua" type="client"/>
     <script src="Panel/server.lua" type="server"/>
+    <script src="Panel/winsys.lua" type="client"/>
 
 
     <file src="images/pane.png"/>
     <file src="images/arrow.png"/>
-    <file src="images/left.png"/>
     <file src="images/title.png"/>
-    <file src="images/aleft.png"/>
-    <file src="images/aright.png"/>
+    <!--file src="images/aleft.png"/-->
+    <!--file src="images/aright.png"/-->
     <file src="images/round.png"/>
     <file src="images/cross.png"/>
+    <file src="images/left.png"/>
+    <file src="images/right.png"/>
+    <file src="images/resizer.png"/>
+
+    <file src="images/backt.png"/>
+    <file src="images/backb.png"/>
+    <file src="images/backl.png"/>
+    <file src="images/backr.png"/>
+
+    <file src="images/backtl.png"/>
+    <file src="images/backbl.png"/>
+    <file src="images/backtr.png"/>
+    <file src="images/backbr.png"/>
 
     <file src="images/menu/account.png"/>
     <file src="images/menu/info.png"/>
@@ -52,4 +65,6 @@
     <export function="closeTimeOrWeather" type="client"/>
     <export function="openNotifications" type="client"/>
     <export function="closeNotifications" type="client"/>
+
+    <oop>true</oop>
 </meta>
