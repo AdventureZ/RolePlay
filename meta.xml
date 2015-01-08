@@ -56,15 +56,48 @@
 
 
 
-
+    <!-- Notifications export functions -->
     <export function="addNotification" type="client"/>
     <export function="addNotification" type="server"/>
+
     <export function="openMainMenu" type="client"/>
     <export function="closeMainMenu" type="client"/>
+
     <export function="openTimeOrWeather" type="client"/>
     <export function="closeTimeOrWeather" type="client"/>
+
     <export function="openNotifications" type="client"/>
     <export function="closeNotifications" type="client"/>
+
+
+    <!-- Static Window export functions -->
+
+    <export function="createWindow" type="client"/>
+    <export function="setStaticWindowPosition" type="server"/>
+    <export function="getStaticWindowPosition" type="client"/>
+
+    <export function="setStaticWindowSize" type="client"/>
+    <export function="getStaticWindowSize" type="client"/>
+
+    <export function="setStaticWindowMinSize" type="client"/>
+    <export function="getStaticWindowMinSize" type="client"/>
+
+    <export function="setStaticWindowMaxSize" type="client"/>
+    <export function="getStaticWindowMaxSize" type="client"/>
+
+    <export function="getStaticWindowID" type="client"/>
+
+    <export function="setStaticWindowMovable" type="client"/>
+    <export function="getStaticWindowMovable" type="client"/>
+
+    <export function="setStaticWindowSizable" type="client"/>
+    <export function="getStaticWindowSizable" type="client"/>
+
+    <export function="setStaticWindowTitle" type="client"/>
+    <export function="getStaticWindowTitle" type="client"/>
+
+    <export function="openStaticWindow" type="client"/>
+    <export function="closeStaticWindow" type="client"/>
 
     <oop>true</oop>
 </meta>

@@ -15,6 +15,10 @@ function createWindow(x, y, w, h, title)
 	y = tonumber(y) or 10
 	w = tonumber(w) or 50
 	h = tonumber(h) or 20
+
+	WindowSystem[id]["MinSize"] = {w, h}
+	WindowSystem[id]["MaxSize"] = {Width-8, Height-68}
+
 	WindowSystem[id]["Back"] = GuiStaticImage.create(x-4, y-4, w+8, h+28, "images/pane.png", false)
 	WindowSystem[id]["Back"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 
 
@@ -309,8 +313,10 @@ function setStaticWindowSize(win, w, h)
 	if not tonumber(win) then ident = getStaticWindowID(win)
 	else ident = tonumber(win) end
 	if not WindowSystem[ident]["Back"] then return false end
-	if w < 100 then w = 100 end
-	if h < 30 then h = 30 end
+	if w < WindowSystem[id]["MinSize"][1] then w = WindowSystem[id]["MinSize"][1] end
+	if h < WindowSystem[id]["MinSize"][2] then h = WindowSystem[id]["MinSize"][2] end
+	if w > WindowSystem[id]["MaxSize"][1] then w = WindowSystem[id]["MaxSize"][1] end
+	if h > WindowSystem[id]["MaxSize"][2] then h = WindowSystem[id]["MaxSize"][2] end
 
 	WindowSystem[id]["BackTop"]:setSize(w-8, 8, false)
 	WindowSystem[id]["BackTopRight"]:setPosition(w, 0, false)
@@ -340,6 +346,49 @@ function setStaticWindowSize(win, w, h)
 	return WindowSystem[ident]["Back"]:setSize(w+8, h+28, false)
 end
 
+function setStaticWindowMinSize(win, minw, minh)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+	local w, h = WindowSystem[ident]["Back"]:getSize(false)
+	if not minw or not tonumber(minw) then minw = w end
+	if not minh or not tonumber(minh) then minh = h end
+
+	WindowSystem[ident]["MinSize"] = {minw, minh}
+end
+
+function setStaticWindowMaxSize(win, maxw, maxh)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+	local w, h = Width-8, Height-68
+	if not maxw or not tonumber(maxw) then maxw = w end
+	if not maxh or not tonumber(maxh) then maxh = h end
+
+	WindowSystem[ident]["MaxSize"] = {maxw, maxh}
+end
+
+function getStaticWindowMinSize(win)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+
+	return WindowSystem[ident]["MinSize"][1], WindowSystem[ident]["MinSize"][2]
+end
+
+function getStaticWindowMaxSize(win)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+
+	return WindowSystem[ident]["MaxSize"][1], WindowSystem[ident]["MaxSize"][2]
+end
+
+
 function getStaticWindowID(win)
 	local ID = nil
 	for i in pairs(WindowSystem) do
@@ -360,6 +409,15 @@ function setStaticWindowMovable(win, bool)
 	WindowSystem[ident]["Moving"] = bool
 end
 
+function getStaticWindowMovable(win)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+
+	return WindowSystem[ident]["Moving"]
+end
+
 function setStaticWindowSizable(win, bool)
 	local ident
 	if not tonumber(win) then ident = getStaticWindowID(win)
@@ -371,6 +429,15 @@ function setStaticWindowSizable(win, bool)
 	WindowSystem[ident]["Resize"]:setVisible(bool)
 end
 
+function getStaticWindowSizable(win)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+
+	return WindowSystem[ident]["Resizing"]
+end
+
 function setStaticWindowTitle(win, titletext)
 	local ident
 	if not tonumber(win) then ident = getStaticWindowID(win)
@@ -379,6 +446,15 @@ function setStaticWindowTitle(win, titletext)
 	if not tostring(titletext) then titletext = "" end
 
 	WindowSystem[ident]["Title"]:setText(tostring(titletext))
+end
+
+function getStaticWindowTitle(win)
+	local ident
+	if not tonumber(win) then ident = getStaticWindowID(win)
+	else ident = tonumber(win) end
+	if not WindowSystem[ident]["Back"] then return false end
+
+	return WindowSystem[ident]["Title"]:getText()
 end
 
 function getStaticWindowPosition(win, bool)
