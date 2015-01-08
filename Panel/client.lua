@@ -11,6 +11,7 @@ local openCloseTimeR = 0 --Открыть/закрыть меню время/п�
 local openNotification = 0 --Открыть/закрыть уведомление (1 - закрыть, 2 - открыть)
 local CloseNotificationPanel --Кнопка для закрытия панели уведомлений
 local TopBarIcons={} --Таблица иконок топбара
+local Enable={} --Курсор на gui-элементе
 
 addEventHandler("onClientResourceStart", root, function(res)
 
@@ -278,31 +279,30 @@ addEventHandler("onClientResourceStart", root, function(res)
 	--guiSetProperty(OpenedSettsPane, "ImageColours", "tl:AAFFFFFF tr:AAFFFFFF bl:AAFFFFFF br:AAFFFFFF")
 
 	local ShopInterface = guiCreateStaticImage(0, 0, 250, 250, "images/pane.png", false, OpenedSettsPane) --Меню магазина
-	local ShopInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, ShopInterface) --Цветной индикатор
-	guiSetProperty(ShopInters, "ImageColours", "tl:FF00FF00 tr:FF00FF00 bl:FF00FF00 br:FF00FF00")
+	--local ShopInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, ShopInterface) --Цветной индикатор
+	--guiSetProperty(ShopInters, "ImageColours", "tl:FF00FF00 tr:FF00FF00 bl:FF00FF00 br:FF00FF00")
 	guiSetProperty(ShopInterface, "ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000")
 
 	local InventInterface = guiCreateStaticImage(250, 0, 250, 250, "images/pane.png", false, OpenedSettsPane) --Меню инвентаря
-	local InventInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, InventInterface) --Цветной индикатор
-	guiSetProperty(InventInters, "ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
+	--local InventInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, InventInterface) --Цветной индикатор
+	--guiSetProperty(InventInters, "ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
 	guiSetProperty(InventInterface, "ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000")
 
 	local SettingsInterface = guiCreateStaticImage(250, 0, 250, 250, "images/pane.png", false, OpenedSettsPane) --Меню настроек
-	local SettingsInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, SettingsInterface) --Цветной индикатор
-	guiSetProperty(SettingsInters, "ImageColours", "tl:FF6600FF tr:FF6600FF bl:FF6600FF br:FF6600FF")
+	--local SettingsInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, SettingsInterface) --Цветной индикатор
+	--guiSetProperty(SettingsInters, "ImageColours", "tl:FF6600FF tr:FF6600FF bl:FF6600FF br:FF6600FF")
 	guiSetProperty(SettingsInterface, "ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000")
 
 	local InfoInterface = guiCreateStaticImage(250, 0, 250, 250, "images/pane.png", false, OpenedSettsPane) --Меню инфо
-	local InfoInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, InfoInterface) --Цветной индикатор
-	guiSetProperty(InfoInters, "ImageColours", "tl:FFFFF000 tr:FFFFF000 bl:FFFFF000 br:FFFFF000")
+	--local InfoInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, InfoInterface) --Цветной индикатор
+	--guiSetProperty(InfoInters, "ImageColours", "tl:FFFFF000 tr:FFFFF000 bl:FFFFF000 br:FFFFF000")
 	guiSetProperty(InfoInterface, "ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000")
 
 	local UserInterface = guiCreateStaticImage(250, 0, 250, 250, "images/pane.png", false, OpenedSettsPane) --Меню юзера
-	local UserInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, UserInterface) --Цветной индикатор
-	guiSetProperty(UserInters, "ImageColours", "tl:FFFF0000 tr:FFFF0000 bl:FFFF0000 br:FFFF0000")
+	--local UserInters = guiCreateStaticImage(0, 0, 1, 250, "images/pane.png", false, UserInterface) --Цветной индикатор
+	--guiSetProperty(UserInters, "ImageColours", "tl:FFFF0000 tr:FFFF0000 bl:FFFF0000 br:FFFF0000")
 	guiSetProperty(UserInterface, "ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000")
 
-	local Enable={} --Курсор на gui-элементе
 	local ScrollPad={} --Перемещение
 	closeTabs, openTabs = true, false --При старте закроем главное меню
 
@@ -1367,6 +1367,8 @@ function addNotification(title, text, func)
 	--number[id] = 0
 
 	AllNotifications[id]={}
+	Notification:setText(tostring(title))
+	Enable[6] = true
 
 	AllNotifications[id]["Background"] = guiCreateStaticImage(0, ElementY, 220, 50, "images/pane.png", false, NotificationBar)
 	guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
@@ -1399,7 +1401,7 @@ function addNotification(title, text, func)
 			if x == 210 then
 				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
 			else
-				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF990000 tr:FF990000 bl:FF990000 br:FF990000")
+				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
 			end
 		end
 	end)
@@ -1421,7 +1423,7 @@ function addNotification(title, text, func)
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
 			if x == 210 then 
 				AllNotifications[id]["OpenClose"] = 1
-				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF990000 tr:FF990000 bl:FF990000 br:FF990000")
+				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
 			else
 				AllNotifications[id]["Destroy"] = true
 				--for i in pairs(AllNotifications) do number[i] = 0 end
@@ -1447,17 +1449,33 @@ function addNotification(title, text, func)
 		if AllNotifications[id]["OpenClose"] == 1 then
 			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
+			local kx, ky = guiGetPosition(AllNotifications[id]["Title"], false)
+			local jx, jy = guiGetPosition(AllNotifications[id]["Text"], false)
 			zx = zx-4
+			kx = kx-3
+			jx = jx-3
+			if kx <= -20 then kx = -20 end
+			if jx <= -15 then jx = -15 end
 			if zx <= 170 then zx = 170 end
 			guiSetPosition(AllNotifications[id]["Close"], zx, zy, false)
+			guiSetPosition(AllNotifications[id]["Title"], kx, ky, false)
+			guiSetPosition(AllNotifications[id]["Text"], jx, jy, false)
 			guiBringToFront(AllNotifications[id]["Moving"])
 			if zx == 170 then AllNotifications[id]["OpenClose"] = 0 end 
 		elseif AllNotifications[id]["OpenClose"] == 2 then
 			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
+			local kx, ky = guiGetPosition(AllNotifications[id]["Title"], false)
+			local jx, jy = guiGetPosition(AllNotifications[id]["Text"], false)
 			zx = zx+4
+			kx = kx+3
+			jx = jx+3
+			if kx >= 10 then kx = 10 end
+			if jx >= 15 then jx = 15 end
 			if zx >= 210 then zx = 210 end
 			guiSetPosition(AllNotifications[id]["Close"], zx, zy, false)
+			guiSetPosition(AllNotifications[id]["Title"], kx, ky, false)
+			guiSetPosition(AllNotifications[id]["Text"], jx, jy, false)
 			guiBringToFront(AllNotifications[id]["Moving"])
 			if zx == 210 then AllNotifications[id]["OpenClose"] = 0 end 
 		end
@@ -1501,6 +1519,22 @@ function addNotification(title, text, func)
 				--Удаляем нотификацию
 				AllNotifications[id]["Destroy"] = false
 				destroyElement(AllNotifications[id]["Background"])
+
+				local ide
+				for i in ipairs(AllNotifications) do
+					if isElement(AllNotifications[i]["Title"]) then
+						ide = i
+					end
+				end
+				if ide ~= nil then
+					if isElement(AllNotifications[ide]["Title"]) then
+						Notification:setText(tostring(guiGetText(AllNotifications[ide]["Title"]) ))
+					end
+				else
+					Notification:setText("Нет уведомлений")
+				end
+
+
 				NotifCount = NotifCount-1
 				return false
 			end

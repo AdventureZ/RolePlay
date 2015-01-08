@@ -141,6 +141,14 @@ function createWindow(x, y, w, h, title)
 					setStaticWindowPosition(id, 0, 40, false)
 					setStaticWindowSize(id, Width-8, Height-68)
 					WindowSystem[id]["Back"]:setSize(Width, 0, false)	
+
+					local hex = fromPropertyToHEX(WindowSystem[id]["Frame"])
+					local r, g, b = fromHEXToRGB("3498DB")
+					WindowSystem[id]["Window"]:setProperty("ImageColours", "tl:"..hex.." tr:"..hex.." bl:"..hex.." br:"..hex)
+					WindowSystem[id]["FullScreenRound"]:setProperty("ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
+					WindowSystem[id]["CloseRound"]:setProperty("ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
+					WindowSystem[id]["Title"]:setColor(r, g, b)
+
 					setStaticWindowMovable(id, false)
 					setStaticWindowSizable(id, false)		
 					boned = 3
@@ -174,7 +182,14 @@ function createWindow(x, y, w, h, title)
 					--setStaticWindowPosition(id, Vars[3], Vars[4], false)
 					WindowSystem[id]["Back"]:setPosition(Vars[3], Vars[4], false)
 					setStaticWindowSize(id, Vars[1]-8, Vars[2]-28)
-					WindowSystem[id]["Back"]:setSize(Vars[1], 0, false)					
+					WindowSystem[id]["Back"]:setSize(Vars[1], 0, false)			
+
+					WindowSystem[id]["Window"]:setProperty("ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
+					WindowSystem[id]["FullScreenRound"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF")
+					WindowSystem[id]["CloseRound"]:setProperty("ImageColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF")
+					WindowSystem[id]["Title"]:setColor(255, 255, 255)
+
+
 					setStaticWindowMovable(id, Vars[5])
 					setStaticWindowSizable(id, Vars[6])
 					boned = 2
