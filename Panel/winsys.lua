@@ -415,7 +415,7 @@ function closeStaticWindow(win)
 	AnimatedClose[ident] = true
 end
 
-local window = createWindow(108, 100, 450, 200, "Test")
+local window = createWindow(108, 100, 450, 200, "MTA Role Play")
 addCommandHandler("show", function()
 	openStaticWindow(window)
 end)

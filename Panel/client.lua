@@ -237,7 +237,8 @@ addEventHandler("onClientResourceStart", root, function(res)
 	--guiSetProperty(NotifiPane, "ImageColours", "tl:AAFFFFFF tr:AAFFFFFF bl:AAFFFFFF br:AAFFFFFF")
 
 	CloseNotificationPanel = guiCreateStaticImage((Width/2)-12, 240, 24, 24, "images/arrow.png", false) --Скрыть панель уведомлений
-	guiSetProperty(CloseNotificationPanel, "AlwaysOnTop", "True")
+	guiBringToFront(CloseNotificationPanel)
+	--guiSetProperty(CloseNotificationPanel, "AlwaysOnTop", "True")
 
 	local scNotBar = guiCreateScrollPane(0, 22, 240, 156, false, NotifiPane) --Скроллер уведомлений (нахуй надо, если не скроллится?)
 	NotificationBar = guiCreateStaticImage(0, 0, 220, 156, "images/pane.png", false, scNotBar) --панель уведомлений в скроллере
@@ -258,8 +259,12 @@ addEventHandler("onClientResourceStart", root, function(res)
 
 			else --Иначе открываем панели, и делаем стрелочку видимой
 				openNotification = 2 
-				guiSetVisible(nottops, true) end 
+				guiSetVisible(nottops, true) 
+			end 
+		end
 
+		if source == NotifiPane or source == scNotBar or source == NotificationBar then
+			guiBringToFront(CloseNotificationPanel) 
 		end
 	end)
 
@@ -916,6 +921,7 @@ addEventHandler("onClientResourceStart", root, function(res)
 					guiSetSize(NotifiPane, w, h, false)
 					openNotification = 0
 					guiSetVisible(CloseNotificationPanel, true)
+					guiBringToFront(CloseNotificationPanel) 
 					return false
 				end
 				guiSetSize(NotifiPane, w, h, false)
@@ -1357,8 +1363,8 @@ function addNotification(title, text, func)
 	local r, g, b = fromHEXToRGB("4183D7")
 	local r1, g1, b1 = fromHEXToRGB("AA0000")
 
-	local number = {}
-	number[id] = 0
+	--local number = {}
+	--number[id] = 0
 
 	AllNotifications[id]={}
 
@@ -1411,17 +1417,19 @@ function addNotification(title, text, func)
 	--local Yses = {}
 	addEventHandler("onClientGUIClick", root, function()
 		if source == AllNotifications[id]["Close"] then
+			guiBringToFront(CloseNotificationPanel) 
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
 			if x == 210 then 
 				AllNotifications[id]["OpenClose"] = 1
 				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF990000 tr:FF990000 bl:FF990000 br:FF990000")
 			else
 				AllNotifications[id]["Destroy"] = true
-				for i in pairs(AllNotifications) do number[i] = 0 end
+				--for i in pairs(AllNotifications) do number[i] = 0 end
 			end
 		end   
 
 		if source == AllNotifications[id]["Moving"] then
+			guiBringToFront(CloseNotificationPanel) 
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
 			if x == 210 then
 				--AllNotifications[id]["Destroy"] = true
@@ -1439,7 +1447,7 @@ function addNotification(title, text, func)
 		if AllNotifications[id]["OpenClose"] == 1 then
 			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
-			zx = zx-2
+			zx = zx-4
 			if zx <= 170 then zx = 170 end
 			guiSetPosition(AllNotifications[id]["Close"], zx, zy, false)
 			guiBringToFront(AllNotifications[id]["Moving"])
@@ -1447,7 +1455,7 @@ function addNotification(title, text, func)
 		elseif AllNotifications[id]["OpenClose"] == 2 then
 			if not isElement(AllNotifications[id]["Close"]) then return false end
 			local zx, zy = guiGetPosition(AllNotifications[id]["Close"], false)
-			zx = zx+2
+			zx = zx+4
 			if zx >= 210 then zx = 210 end
 			guiSetPosition(AllNotifications[id]["Close"], zx, zy, false)
 			guiBringToFront(AllNotifications[id]["Moving"])
@@ -1464,9 +1472,9 @@ function addNotification(title, text, func)
 					local x1, y1 = guiGetPosition(AllNotifications[i]["Background"], false)
 					if y1 > y then 
 						--Каждому уведомлению меняем позицию
-						number[i] = number[i]+1 --Наверное не нужно
+						--number[i] = number[i]+1 --Наверное не нужно
 						y1 = y1-4
-						if number[i] > 14 then return false end --Наверное не нужно
+						--if number[i] > 14 then return false end --Наверное не нужно
 						guiSetPosition(AllNotifications[i]["Background"], x1, y1, false)
 					end
 				end
@@ -1606,7 +1614,7 @@ function openMainMenu() openTabs = true closeTabs = false end
 function closeMainMenu() closeTabs = true openTabs = false end
 function openTimeOrWeather() openCloseTimeR = 2 end
 function closeTimeOrWeather() openCloseTimeR = 1 end
-function openNotifications() openNotification = 2 end
+function openNotifications() openNotification = 2 guiBringToFront(CloseNotificationPanel) end
 function closeNotifications() openNotification = 1 guiSetVisible(CloseNotificationPanel, false) end
 
 addEvent("addNotification", true)
