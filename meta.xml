@@ -2,6 +2,7 @@
 	<info author="TrezeLurese" name="MainPanel" version="0" type="script"/>
     
     <script src="Panel/client.lua" type="client"/>
+    <script src="Panel/cursor.lua" type="client"/>
     <script src="Panel/server.lua" type="server"/>
     <script src="Panel/winsys.lua" type="client"/>
 
@@ -38,6 +39,12 @@
     <file src="images/weather/storm.png"/>
     <file src="images/weather/sunny.png"/>
     <file src="images/weather/wind.png"/>
+
+    <file src="images/cursor/cursor.png"/>
+    <file src="images/cursor/close.png"/>
+    <file src="images/cursor/fullscreen.png"/>
+    <file src="images/cursor/downscreen.png"/>
+    <file src="images/cursor/resizer.png"/>
 
     <file src="fonts/thin.ttf"/>
     <file src="fonts/OSB.ttf"/>
@@ -98,6 +105,12 @@
 
     <export function="openStaticWindow" type="client"/>
     <export function="closeStaticWindow" type="client"/>
+
+
+    <!--Cursor-->
+    <export function="setCursorVisible" type="client"/>
+    <export function="setCursorImage" type="client"/>
+    
 
     <oop>true</oop>
 </meta>

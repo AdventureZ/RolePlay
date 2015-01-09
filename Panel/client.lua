@@ -9,7 +9,7 @@ local colorChanger={} --Таймеры--, забил на них
 local closeTabs, openTabs = true, false --Открыть/закрыть главное меню (Справа)
 local openCloseTimeR = 0 --Открыть/закрыть меню время/погода (1 - закрыть, 2 - открыть)
 local openNotification = 0 --Открыть/закрыть уведомление (1 - закрыть, 2 - открыть)
-local CloseNotificationPanel --Кнопка для закрытия панели уведомлений
+local CloseNotificationPanel, ClosingNotificationPanel --Кнопка для закрытия панели уведомлений
 local TopBarIcons={} --Таблица иконок топбара
 local Enable={} --Курсор на gui-элементе
 
@@ -76,7 +76,7 @@ addEventHandler("onClientResourceStart", root, function(res)
 	TopBarIcons[6] = guiCreateStaticImage((Width/2)-110, 0, 220, 40, "images/pane.png", false, topbr) --Иконка под уведомлениями
 	guiSetProperty(TopBarIcons[6], "ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
 
-	Notification = guiCreateLabel(0, 0, 1, 0.94, "Test Notification", true, TopBarIcons[6]) --Текст уведомления
+	Notification = guiCreateLabel(0, 0, 1, 0.94, "Нет уведомлений", true, TopBarIcons[6]) --Текст уведомления
 	guiLabelSetVerticalAlign(Notification, "center")
 	guiLabelSetHorizontalAlign(Notification, "center")
 	guiSetFont(Notification, guiCreateFont("fonts/OSL.ttf", 16.6) )
@@ -238,7 +238,7 @@ addEventHandler("onClientResourceStart", root, function(res)
 	--guiSetProperty(NotifiPane, "ImageColours", "tl:AAFFFFFF tr:AAFFFFFF bl:AAFFFFFF br:AAFFFFFF")
 
 	CloseNotificationPanel = guiCreateStaticImage((Width/2)-12, 240, 24, 24, "images/arrow.png", false) --Скрыть панель уведомлений
-	guiBringToFront(CloseNotificationPanel)
+	ClosingNotificationPanel = guiCreateStaticImage(110-12, 188, 24, 24, "images/arrow.png", false, NotifiPane) --Скрыть панель уведомлений
 	--guiSetProperty(CloseNotificationPanel, "AlwaysOnTop", "True")
 
 	local scNotBar = guiCreateScrollPane(0, 22, 240, 156, false, NotifiPane) --Скроллер уведомлений (нахуй надо, если не скроллится?)
@@ -247,16 +247,18 @@ addEventHandler("onClientResourceStart", root, function(res)
 
 	openNotification = 1 --1 - close; 2 - open
 	guiSetVisible(CloseNotificationPanel, false) --Скроем при старте уведомления
+	guiSetVisible(ClosingNotificationPanel, false) 
 
 
 	addEventHandler("onClientGUIClick", root, function()
-		if source == Notification or source == CloseNotificationPanel then --Если кликаем по уведомлению в топбаре или закрывашке уведомух, то
+		if source == Notification or source == CloseNotificationPanel or source == ClosingNotificationPanel then --Если кликаем по уведомлению в топбаре или закрывашке уведомух, то
 
 			local _, h = guiGetSize(NotifiPane, false) --Проверяем высоту панели уведомлений
 
 			if h > 190 then --Если высота больше 190, то скрываем панель и кнопку скрытия
 				openNotification = 1 
 				guiSetVisible(CloseNotificationPanel, false) 
+				guiSetVisible(ClosingNotificationPanel, false) 
 
 			else --Иначе открываем панели, и делаем стрелочку видимой
 				openNotification = 2 
@@ -265,7 +267,6 @@ addEventHandler("onClientResourceStart", root, function(res)
 		end
 
 		if source == NotifiPane or source == scNotBar or source == NotificationBar then
-			guiBringToFront(CloseNotificationPanel) 
 		end
 	end)
 
@@ -921,7 +922,7 @@ addEventHandler("onClientResourceStart", root, function(res)
 					guiSetSize(NotifiPane, w, h, false)
 					openNotification = 0
 					guiSetVisible(CloseNotificationPanel, true)
-					guiBringToFront(CloseNotificationPanel) 
+					guiSetVisible(ClosingNotificationPanel, true) 
 					return false
 				end
 				guiSetSize(NotifiPane, w, h, false)
@@ -1394,7 +1395,9 @@ function addNotification(title, text, func)
 
 	addEventHandler("onClientMouseEnter", root, function()
 		if source == AllNotifications[id]["Moving"] then
+
 			guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
+
 		end
 		if source == AllNotifications[id]["Close"] then
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
@@ -1402,6 +1405,7 @@ function addNotification(title, text, func)
 				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
 			else
 				guiSetProperty(AllNotifications[id]["Background"], "ImageColours", "tl:FF4183D7 tr:FF4183D7 bl:FF4183D7 br:FF4183D7")
+				setCursorImage("images/cursor/close.png")
 			end
 		end
 	end)
@@ -1419,7 +1423,7 @@ function addNotification(title, text, func)
 	--local Yses = {}
 	addEventHandler("onClientGUIClick", root, function()
 		if source == AllNotifications[id]["Close"] then
-			guiBringToFront(CloseNotificationPanel) 
+
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
 			if x == 210 then 
 				AllNotifications[id]["OpenClose"] = 1
@@ -1431,7 +1435,6 @@ function addNotification(title, text, func)
 		end   
 
 		if source == AllNotifications[id]["Moving"] then
-			guiBringToFront(CloseNotificationPanel) 
 			local x = guiGetPosition(AllNotifications[id]["Close"], false)
 			if x == 210 then
 				--AllNotifications[id]["Destroy"] = true
@@ -1461,6 +1464,7 @@ function addNotification(title, text, func)
 			guiSetPosition(AllNotifications[id]["Title"], kx, ky, false)
 			guiSetPosition(AllNotifications[id]["Text"], jx, jy, false)
 			guiBringToFront(AllNotifications[id]["Moving"])
+			setCursorImage("images/cursor/close.png")
 			if zx == 170 then AllNotifications[id]["OpenClose"] = 0 end 
 		elseif AllNotifications[id]["OpenClose"] == 2 then
 			if not isElement(AllNotifications[id]["Close"]) then return false end
@@ -1648,8 +1652,8 @@ function openMainMenu() openTabs = true closeTabs = false end
 function closeMainMenu() closeTabs = true openTabs = false end
 function openTimeOrWeather() openCloseTimeR = 2 end
 function closeTimeOrWeather() openCloseTimeR = 1 end
-function openNotifications() openNotification = 2 guiBringToFront(CloseNotificationPanel) end
-function closeNotifications() openNotification = 1 guiSetVisible(CloseNotificationPanel, false) end
+function openNotifications() openNotification = 2 end
+function closeNotifications() openNotification = 1 guiSetVisible(CloseNotificationPanel, false) guiSetVisible(ClosingNotificationPanel, false) end
 
 addEvent("addNotification", true)
 addEventHandler("addNotification", localPlayer, function(title, text) addNotification(title, text) end)

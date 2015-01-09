@@ -69,17 +69,27 @@ function createWindow(x, y, w, h, title)
 	WindowSystem[id]["Resize"] = GuiStaticImage.create(w-7, h-7, 7, 7, "images/resizer.png", false, WindowSystem[id]["Frame"])
 	WindowSystem[id]["Resize"]:setProperty("ImageColours", "tl:FF3498DB tr:FF3498DB bl:FF3498DB br:FF3498DB")
 
+	local Fullscreened = false
 
 	addEventHandler("onClientMouseEnter", root, function()
 		if source == WindowSystem[id]["FullScreenRound"] then
-			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:FFEB974E tr:FFEB974E bl:FFEB974E br:FFEB974E") 	
+			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:FFEB974E tr:FFEB974E bl:FFEB974E br:FFEB974E")
+
+			if Fullscreened then setCursorImage("images/cursor/downscreen.png")
+			else setCursorImage("images/cursor/fullscreen.png")
+			end 
 		end
 		if source == WindowSystem[id]["CloseRound"] then
 			WindowSystem[id]["Close"]:setProperty("ImageColours", "tl:FFD64541 tr:FFD64541 bl:FFD64541 br:FFD64541") 	
+			setCursorImage("images/cursor/close.png")
+		end
+		if source == WindowSystem[id]["Resize"] then
+			setCursorImage("images/cursor/resizer.png")
 		end
 	end)
 
 	addEventHandler("onClientMouseLeave", root, function()
+		setCursorImage("images/cursor/cursor.png")
 		if source == WindowSystem[id]["FullScreenRound"] then
 			WindowSystem[id]["FullScreen"]:setProperty("ImageColours", "tl:00000000 tr:00000000 bl:00000000 br:00000000") 	
 		end
@@ -113,11 +123,11 @@ function createWindow(x, y, w, h, title)
 
 	local boned = 0
 	local Vars={}
-	local Fullscreened = false
 	addEventHandler("onClientRender", root, function()
 		if AnimatedFullscreen[id] then
 			AnimatedClose[id] = false
 			AnimatedOpen[id] = false
+			setCursorImage("images/cursor/cursor.png")
 
 			if Fullscreened == false then
 
@@ -276,6 +286,7 @@ function createWindow(x, y, w, h, title)
 	addEventHandler("onClientGUIMouseUp", root, function()
 		EnableMoving[id] = false
 		EnableResizing[id] = false
+		setCursorImage("images/cursor/cursor.png")
 	end)
 
 	addEventHandler("onClientGUIMouseDown", root, function(_, CurX, CurY)
@@ -300,6 +311,7 @@ function createWindow(x, y, w, h, title)
 		end
 		if EnableResizing[id] then
 			setStaticWindowSize(id, cursx-Positions[1], cursy-Positions[2])
+			setCursorImage("images/cursor/resizer.png")
 		end
 	end)
 
