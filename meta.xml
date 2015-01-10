@@ -5,6 +5,7 @@
     <script src="Panel/cursor.lua" type="client"/>
     <script src="Panel/server.lua" type="server"/>
     <script src="Panel/winsys.lua" type="client"/>
+    <script src="Panel/coords.lua" type="client"/>
 
 
     <file src="images/pane.png"/>
