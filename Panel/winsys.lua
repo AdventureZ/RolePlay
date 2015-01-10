@@ -454,6 +454,7 @@ function setStaticWindowSizable(win, bool)
 
 	WindowSystem[ident]["Resizing"] = bool
 	WindowSystem[ident]["Resize"]:setVisible(bool)
+	WindowSystem[id]["FullScreen"]:setVisible(bool)
 end
 
 function getStaticWindowSizable(win)
@@ -518,7 +519,7 @@ function closeStaticWindow(win)
 	AnimatedClose[ident] = true
 end
 
-local window = createWindow(108, 100, 450, 200, "MTA Role Play")
+--[[local window = createWindow(108, 100, 450, 200, "MTA Role Play")
 addCommandHandler("show", function()
 	openStaticWindow(window)
-end)
+end)]]

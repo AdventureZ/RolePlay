@@ -6,6 +6,7 @@
     <script src="Panel/server.lua" type="server"/>
     <script src="Panel/winsys.lua" type="client"/>
     <script src="Panel/coords.lua" type="client"/>
+    <script src="Panel/customs.lua" type="client"/>
 
 
     <file src="images/pane.png"/>
@@ -46,6 +47,7 @@
     <file src="images/cursor/fullscreen.png"/>
     <file src="images/cursor/downscreen.png"/>
     <file src="images/cursor/resizer.png"/>
+    <file src="images/cursor/text.png"/>
 
     <file src="fonts/thin.ttf"/>
     <file src="fonts/OSB.ttf"/>
